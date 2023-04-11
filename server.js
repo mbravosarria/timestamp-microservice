@@ -1,11 +1,15 @@
 const express = require("express")
+const cors = require("cors")
 const path = require("path")
+
 const app = express()
 const port = 3000
 
+app.use(cors({ optionsSuccessStatus: 200 }))
+
 app.use(express.static(path.join(__dirname, "public")))
 
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
   const date = new Date()
   res.send({
     unix: date.getTime(),
@@ -13,7 +17,7 @@ app.get("/", (req, res) => {
   })
 })
 
-app.get("/:date", (req, res) => {
+app.get("/api/:date", (req, res) => {
   try {
     const date = new Date(
       req.params.date.indexOf("-") !== -1
