@@ -20,10 +20,14 @@ app.get("/:date", (req, res) => {
         ? req.params.date
         : parseInt(req.params.date)
     )
-    res.send({
-      unix: date.getTime(),
-      utc: date.toUTCString(),
-    })
+    const utc = date.toUTCString()
+
+    utc === "Invalid Date"
+      ? res.send({ error: utc })
+      : res.send({
+          unix: date.getTime(),
+          utc: date.toUTCString(),
+        })
   } catch (error) {
     res.send({ error: "Invalid Date" })
   }
